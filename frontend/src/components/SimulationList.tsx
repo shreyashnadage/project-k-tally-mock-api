@@ -12,7 +12,10 @@ export function SimulationList({ activeId, onSelect }: Props) {
 
   const deleteMut = useMutation({
     mutationFn: deleteSimulation,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['simulations'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['simulations'] });
+      queryClient.invalidateQueries({ queryKey: ['health'] });
+    },
   });
 
   if (!sims?.length) {

@@ -17,6 +17,7 @@ function AppContent() {
     setLastResult(result);
     setActiveSimId(result.simulation_id);
     queryClient.invalidateQueries({ queryKey: ['simulations'] });
+    queryClient.invalidateQueries({ queryKey: ['health'] });
   };
 
   return (
