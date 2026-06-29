@@ -56,7 +56,7 @@ function ChartTab({ simId }: { simId: number }) {
           <YAxis stroke="#8b8d98" fontSize={11} tickFormatter={(v) => `${(v / 100000).toFixed(0)}L`} />
           <Tooltip
             contentStyle={{ background: '#1a1d27', border: '1px solid #2a2e3a', borderRadius: 8, fontSize: 12 }}
-            formatter={(value: number) => [`₹${fmt(value)}`, undefined]}
+            formatter={(value) => [`₹${fmt(Number(value))}`, undefined]}
           />
           <Legend wrapperStyle={{ fontSize: 12 }} />
           <Bar dataKey="sales" fill="#6366f1" name="Sales" radius={[4, 4, 0, 0]} />

@@ -1,5 +1,9 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from backend.api.data_routes import router as data_router
 from backend.api.health_routes import router as health_router
@@ -16,7 +20,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,6 +30,15 @@ app.include_router(tdml_router, tags=["tdml"])
 app.include_router(simulation_router, prefix="/api/simulations", tags=["simulations"])
 app.include_router(data_router, prefix="/api/data", tags=["data"])
 app.include_router(health_router, prefix="/api", tags=["health"])
+
+# Serve React frontend if built assets are present
+_STATIC_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _STATIC_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=_STATIC_DIR / "assets"), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_spa(full_path: str):
+        return FileResponse(_STATIC_DIR / "index.html")
 
 
 @app.on_event("startup")
