@@ -1,4 +1,5 @@
 import asyncio
+import sys
 import threading
 from pathlib import Path
 
@@ -38,7 +39,9 @@ app.include_router(health_router, prefix="/api", tags=["health"])
 app.include_router(emulator_router, prefix="/api", tags=["emulator"])
 
 # Serve React frontend if built assets are present
-_STATIC_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+# When frozen by PyInstaller, files live under sys._MEIPASS
+_BASE = Path(sys._MEIPASS) if getattr(sys, "frozen", False) else Path(__file__).resolve().parent.parent
+_STATIC_DIR = _BASE / "frontend" / "dist"
 if _STATIC_DIR.exists():
     app.mount("/assets", StaticFiles(directory=_STATIC_DIR / "assets"), name="assets")
 
