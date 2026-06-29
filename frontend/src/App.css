@@ -198,3 +198,70 @@ body {
   font-family: 'Fira Code', monospace; font-size: 0.7rem;
   color: var(--accent); word-break: break-all;
 }
+
+/* ── Emulator Panel ─────────────────────────────────────────────────────── */
+.emulator-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; transition: border-color 0.2s;
+}
+
+.emulator-panel.emulator-active { border-color: #f59e0b; }
+
+.emulator-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
+}
+
+.emulator-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.dot-active { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+.dot-idle   { background: var(--text-muted); }
+
+.emulator-title {
+  font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600;
+}
+
+.emulator-port {
+  margin-left: auto; font-size: 0.7rem; color: #f59e0b;
+  font-family: monospace;
+}
+
+.emulator-body { display: flex; flex-direction: column; gap: 6px; }
+
+.emulator-company { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.emulator-meta    { font-size: 0.7rem; color: var(--text-muted); }
+
+.emulator-env-block {
+  margin-top: 6px; background: var(--bg); border-radius: 6px; padding: 8px;
+}
+.emulator-env-label { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 4px; }
+.emulator-env-code  {
+  display: block; font-family: 'Fira Code', monospace; font-size: 0.68rem;
+  color: #f59e0b; word-break: break-all;
+}
+
+.emulator-deactivate-btn {
+  margin-top: 4px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border);
+  background: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer;
+  transition: all 0.15s;
+}
+.emulator-deactivate-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+.emulator-idle-msg {
+  font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;
+}
+
+.emulator-sim-list { display: flex; flex-direction: column; gap: 6px; }
+
+.emulator-sim-btn {
+  display: flex; flex-direction: column; align-items: flex-start;
+  width: 100%; padding: 8px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all 0.15s; text-align: left;
+}
+.emulator-sim-btn:hover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+.emulator-sim-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.emulator-sim-name    { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+.emulator-sim-company { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }

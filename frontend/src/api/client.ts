@@ -52,3 +52,22 @@ export async function getHealth(): Promise<{ status: string; simulations_count: 
   const { data } = await api.get('/health');
   return data;
 }
+
+export interface EmulatorState {
+  active_simulation_id: number | null;
+  company_name: string | null;
+  company_guid: string | null;
+  gst_number: string | null;
+  financial_year_from: string | null;
+  financial_year_to: string | null;
+  emulator_port: number;
+}
+
+export async function getEmulatorState(): Promise<EmulatorState> {
+  const { data } = await api.get('/emulator/state');
+  return data;
+}
+
+export async function activateEmulator(simulationId: number | null): Promise<void> {
+  await api.post('/emulator/activate', { simulation_id: simulationId });
+}

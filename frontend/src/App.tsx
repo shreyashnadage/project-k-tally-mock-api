@@ -1,9 +1,11 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SimulationForm } from './components/SimulationForm';
 import { DataPreview } from './components/DataPreview';
 import { SimulationList } from './components/SimulationList';
 import { StatusPanel } from './components/StatusPanel';
+import { EmulatorPanel } from './components/EmulatorPanel';
+import { listSimulations } from './api/client';
 import type { SimulationResult } from './types/simulation';
 import './App.css';
 
@@ -12,6 +14,11 @@ const queryClient = new QueryClient();
 function AppContent() {
   const [activeSimId, setActiveSimId] = useState<number | null>(null);
   const [lastResult, setLastResult] = useState<SimulationResult | null>(null);
+
+  const { data: simulations = [] } = useQuery({
+    queryKey: ['simulations'],
+    queryFn: listSimulations,
+  });
 
   const handleSimulationCreated = (result: SimulationResult) => {
     setLastResult(result);
@@ -30,6 +37,7 @@ function AppContent() {
       <div className="app-layout">
         <aside className="sidebar">
           <StatusPanel />
+          <EmulatorPanel simulations={simulations} />
           <SimulationList
             activeId={activeSimId}
             onSelect={(id) => { setActiveSimId(id); setLastResult(null); }}
